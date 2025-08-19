@@ -6,8 +6,7 @@ import com.example.pages.SearchModalPage;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FavoriteSearchesTest extends BaseTest {
 
@@ -42,7 +41,8 @@ public class FavoriteSearchesTest extends BaseTest {
 
     // this method searches for a term in the search modal and opens the first result
     private void searchForTerm(SearchModalPage search, String term) {
-        search.searchAndOpenFirstResult(term);
+        String label = search.searchAndOpenFirstResult(term);
+        assertNotNull(label, "Expected search to return a result for term: " + term);
         search.waitUntilResultPageLoaded();
     }
 

@@ -53,7 +53,7 @@ public class SearchModalPage extends BasePage {
     }
 
     // Searches for a query and opens the first result in the search modal
-    public void searchAndOpenFirstResult(String query) {
+    public String searchAndOpenFirstResult(String query) {
         openSearch();
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(INPUT));
         input.clear();
@@ -64,12 +64,13 @@ public class SearchModalPage extends BasePage {
         WebElement firstHit = wait.until(ExpectedConditions.elementToBeClickable(FIRST_HIT));
         String label = firstHit.getText().trim();
         if (label.isEmpty()) {
-            throw new RuntimeException("First hit is empty, cannot proceed with search.");
+            return null;
         }
         this.lastSelectedHitLabel = label;
 
         firstHit.click();
         openSearch();
+        return label;
     }
 
     // Searches for a query and returns the first result's label
