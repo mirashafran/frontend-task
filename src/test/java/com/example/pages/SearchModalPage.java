@@ -26,7 +26,10 @@ public class SearchModalPage extends BasePage {
             By.xpath("//div[contains(@class,'DocSearch-Hit-source') and contains(normalize-space(),'Favor')]");
     private static final By SECTION_FAVORITES =
             By.xpath("//section[contains(@class,'DocSearch-Hits')][.//div[contains(@class,'DocSearch-Hit-source') and contains(normalize-space(),'Favor')]]");
-
+    private static final By SEARCH_INPUT =
+            By.id("docsearch-input");
+    private static final By MODAL_CONTAINER =
+            By.cssSelector(".DocSearch-Container, .DocSearch-Modal");
     private String lastSelectedHitLabel;
 
     // Constructor that initializes the SearchModalPage with the WebDriver
@@ -160,6 +163,18 @@ public class SearchModalPage extends BasePage {
     // Waits until the favorite search is removed
     public void waitUntilFavoriteRemoved(String label) {
         wait.until(d -> !getFavorites().contains(label));
+    }
+
+    public void waitUntilOpen() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SEARCH_INPUT));
+    }
+
+    public void waitUntilClosed() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(MODAL_CONTAINER));
+    }
+
+    public WebElement getInput() {
+        return driver.findElement(INPUT);
     }
 
 }
